@@ -1,6 +1,6 @@
 import React from 'react';
 import { 
-    View, TextInput, StyleSheet, KeyboardAvoidingView,
+    View, TextInput, StyleSheet, Alert,
  } from 'react-native';
 
 import AppBar from '../components/AppBar';
@@ -9,13 +9,13 @@ import KeyboardSafeView from '../components/KeyboardSafeView';
 
 export default function MemoEditScreen() {
     return (
-        <KeyboardAvoidingView style={styles.container} behavior="height">
+        <KeyboardSafeView style={styles.container} behavior="height">
           <AppBar />
           <View style={styles.inputContainer}>
               <TextInput value="To do list" multiline style={styles.input} />
           </View>
-          <CircleButton name="check" />
-        </KeyboardAvoidingView>
+          <CircleButton name="check" onPress={() => { Alert.alert('Pressed!')}} />
+        </KeyboardSafeView>
     );
 }
 
