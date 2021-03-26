@@ -1,20 +1,20 @@
 import React from 'react';
 import { 
-    View, TextInput, StyleSheet, Alert,
+    View, TextInput, StyleSheet,
  } from 'react-native';
 
-import AppBar from '../components/AppBar';
 import CircleButton from '../components/CircleButton';
 import KeyboardSafeView from '../components/KeyboardSafeView';
 
 export default function MemoEditScreen() {
     return (
         <KeyboardSafeView style={styles.container} behavior="height">
-          <AppBar />
           <View style={styles.inputContainer}>
               <TextInput value="To do list" multiline style={styles.input} />
           </View>
-          <CircleButton name="check" onPress={() => { Alert.alert('Pressed!')}} />
+          <CircleButton 
+          name="check" 
+          onPress={() => { NavigationPreloadManager.goBack(); }} />
         </KeyboardSafeView>
     );
 }

@@ -4,13 +4,14 @@ import {
  } from 'react-native'
 // import { CircleButton } from '../components/CircleButton'
 
-import AppBar from '../components/AppBar'
+// import AppBar from '../components/AppBar'
 import CircleButton from '../components/CircleButton'
 
-export default function MemoDetailScreen() {
+export default function MemoDetailScreen(props) {
+    const { navigation } = props;
     return(
         <View style={styles.container}>
-            <AppBar />
+            {/* <AppBar /> */}
             <View style={styles.memoHeader}>
                 <Text style={styles.memoTitle}>To Do List</Text>
                 <Text style={styles.memoDate}>2021 Mar 25 15:00</Text>
@@ -23,6 +24,7 @@ export default function MemoDetailScreen() {
             <CircleButton 
             style={{ top: 160, bottom: 'auto' }}
             name="pencil"
+            onPress={() => { navigation.navigate('MemoEdit'); }}
             />
         </View>
     )
