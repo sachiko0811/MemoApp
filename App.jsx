@@ -12,12 +12,14 @@ import SignUpScreen from './src/screens/SignUpScreen';
 
 import { firebaseConfig } from './env';
 
-const Stack = createStackNavigator();
-// require('dotenv').config();
+require('firebase/firestore');
 
 if(firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
 }
+
+const Stack = createStackNavigator();
+// require('dotenv').config();
 
 export default function App() {
   return (
