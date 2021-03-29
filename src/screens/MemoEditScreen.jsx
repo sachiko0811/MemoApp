@@ -1,22 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
-    View, TextInput, StyleSheet,
+    View, TextInput, StyleSheet, Alert
  } from 'react-native';
+ import { shape, string } from 'prop-types';
+ import firebase from 'firebase';
 
 import CircleButton from '../components/CircleButton';
 import KeyboardSafeView from '../components/KeyboardSafeView';
 
-export default function MemoEditScreen() {
+export default function MemoEditScreen(props) {
+    const { navigation, route } = props;
+    const {  id, bodyText } = route.params; // coming from another component bodyText
+    const [body, setBody] = useState(bodyText); // using for this component bodyText
+
+    function handlePress() {
+        const { currentUser } = firebase.auth();
+        if(currentUser) {
+            const db = firebase.firestore();
+            const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
+            // update data
+            ref.set({
+                bodyText: body,  
+                updatedAt: new Date(),
+            }, { merge: true })
+              .then(() => {
+                  navigation.goBack();
+              })
+              .catch((error) => {
+                  Alert.alert(error.code);
+              });
+        }
+    }
     return (
         <KeyboardSafeView style={styles.container} behavior="height">
           <View style={styles.inputContainer}>
-              <TextInput value="To do list" multiline style={styles.input} />
+              <TextInput 
+                value={body} 
+                multiline 
+                style={styles.input} 
+                onChangeText={(text) => { setBody(text); }}
+              />
           </View>
           <CircleButton 
           name="check" 
-          onPress={() => { NavigationPreloadManager.goBack(); }} />
+          onPress={handlePress} 
+          />
         </KeyboardSafeView>
     );
+}
+
+MemoEditScreen.propTypes = {
+    route: shape({
+        params: shape({
+            params: shape({ id: string, bodyText: string }),
+        }).isRequired,
+    })
 }
 
 const styles = StyleSheet.create({
