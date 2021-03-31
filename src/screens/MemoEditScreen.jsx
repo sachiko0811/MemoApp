@@ -1,77 +1,77 @@
 import React, { useState } from 'react';
-import { 
-    View, TextInput, StyleSheet, Alert
- } from 'react-native';
- import { shape, string } from 'prop-types';
- import firebase from 'firebase';
+import {
+  View, TextInput, StyleSheet, Alert,
+} from 'react-native';
+import { shape, string } from 'prop-types';
+import firebase from 'firebase';
 
 import CircleButton from '../components/CircleButton';
 import KeyboardSafeView from '../components/KeyboardSafeView';
 import { translateErrors } from '../utils';
 
 export default function MemoEditScreen(props) {
-    const { navigation, route } = props;
-    const {  id, bodyText } = route.params; // coming from another component bodyText
-    const [body, setBody] = useState(bodyText); // using for this component bodyText
+  const { navigation, route } = props;
+  const {  id , bodyText } = route.params; // coming from another component bodyText
+  const [body, setBody] = useState(bodyText); // using for this component bodyText
 
-    function handlePress() {
-        const { currentUser } = firebase.auth();
-        if(currentUser) {
-            const db = firebase.firestore();
-            const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
-            // update data
-            ref.set({
-                bodyText: body,  
-                updatedAt: new Date(),
-            }, { merge: true })
-              .then(() => {
-                  navigation.goBack();
-              })
-              .catch((error) => {
-                  const errorMsg = translateErrors(error.code);
-                  Alert.alert(errorMsg.title, errorMsg.description);
-              });
-        }
+  function handlePress() {
+    const { currentUser } = firebase.auth();
+    if (currentUser) {
+      const db = firebase.firestore();
+      const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
+      // update data
+      ref.set({
+        bodyText: body,  
+        updatedAt: new Date(),
+      }, { merge: true })
+        .then(() => {
+          navigation.goBack();
+        })
+        .catch((error) => {
+          const errorMsg = translateErrors(error.code);
+          Alert.alert(errorMsg.title, errorMsg.description);
+        });
+      }
     }
-    return (
-        <KeyboardSafeView style={styles.container} behavior="height">
-          <View style={styles.inputContainer}>
-              <TextInput 
-                value={body} 
-                multiline 
-                style={styles.input} 
-                onChangeText={(text) => { setBody(text); }}
-              />
-          </View>
-          <CircleButton 
-          name="check" 
-          onPress={handlePress} 
-          />
-        </KeyboardSafeView>
-    );
+  return (
+    <KeyboardSafeView style={styles.container} behavior="height">
+      <View style={styles.inputContainer}>
+        <TextInput
+          value={body}
+          multiline
+          style={styles.input}
+          onChangeText={(text) => { setBody(text); }}
+        />
+      </View>
+      <CircleButton
+      name="check"
+      onPress={handlePress}
+      />
+    </KeyboardSafeView>
+  );
 }
 
 MemoEditScreen.propTypes = {
-    route: shape({
-        params: shape({
-            params: shape({ id: string, bodyText: string }),
-        }).isRequired,
-    })
-}
+  route: shape({
+    params: shape({
+      params: shape({ id: string, bodyText: string }),
+    }).isRequired,
+  }),
+};
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    inputContainer: {
-        paddingHorizontal: 27,
-        paddingVertical: 32,
-        flex: 1,
-    },
-    input: {
-        flex: 1,
-        textAlignVertical: 'top',
-        fontSize: 16,
-        lineHeight: 24,
-    },
+  container: {
+    flex: 1,
+  },
+  inputContainer: {
+    paddingHorizontal: 27,
+    paddingVertical: 32,
+    flex: 1,
+  },
+  input: {
+    flex: 1,
+    textAlignVertical: 'top',
+    fontSize: 16,
+    lineHeight: 24,
+  },
 });

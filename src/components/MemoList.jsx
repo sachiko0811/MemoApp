@@ -1,16 +1,16 @@
 // import { Feather } from '@expo/vector-icons';
 import React from 'react';
-import { 
+import {
   View, Text, StyleSheet, TouchableOpacity, Alert, FlatList,
- } from 'react-native';
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { 
+import {
   shape, string, instanceOf, arrayOf,
- } from 'prop-types';
- import firebase from 'firebase';
+} from 'prop-types';
+import firebase from 'firebase';
 
 import Icon from './Icon';
-import { dateToString }  from '../utils';
+import { dateToString } from '../utils';
 
 export default function MemoList(props) {
   const { memos } = props;
@@ -18,7 +18,7 @@ export default function MemoList(props) {
 
   function deleteMemo(id) {
     const { currentUser } = firebase.auth();
-    if(currentUser) {
+    if (currentUser) {
       const db = firebase.firestore();
       const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
       Alert.alert('Delete a memo', 'Are you sure?', [
@@ -30,7 +30,8 @@ export default function MemoList(props) {
           text: 'Delete',
           style: 'destructive',
           onPress: () => {
-            ref.delete().catch(() => { Alert.alert('Failed to delete');
+            ref.delete().catch(() => {
+              Alert.alert('Failed to delete');
           });
           },
         },
@@ -39,10 +40,10 @@ export default function MemoList(props) {
   }
 
   function renderItem({ item }) {
-    return(
-      <TouchableOpacity 
+    return (
+      <TouchableOpacity
         style={styles.memoListItem}
-        onPress={()=> { navigation.navigate('MemoDetail', { id: item.id }); }}
+        onPress={() => { navigation.navigate('MemoDetail', { id: item.id }); }}
       >
         <View>
           <Text style={styles.memoListItemTitle} numberOfLines={1}>{item.bodyText}</Text>
@@ -53,21 +54,21 @@ export default function MemoList(props) {
           onPress={() => { deleteMemo(item.id); }}
           // onPress={() => { Alert.alert('Are you sure?'); }}
         >
-          <Icon name="delete" size={24} color="#B0B0B0"/>
-                {/* <Feather name="x" size={16} color="#B0B0B0"/> */}
+          <Icon name="delete" size={24} color="#B0B0B0" />
+          {/* <Feather name="x" size={16} color="#B0B0B0"/> */}
         </TouchableOpacity>
       </TouchableOpacity>
-    )
-  }
-    return(
-        <View>
-          <FlatList
-            data={memos}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id }
-          />
-      </View>
     );
+  }
+  return(
+      <View>
+        <FlatList
+          data={memos}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id }
+        />
+      </View>
+  );
 }
 
 MemoList.propTypes = {
@@ -79,26 +80,26 @@ MemoList.propTypes = {
 };
 
 const styles = StyleSheet.create({
-    memoListItem: {
-        backgroundColor: '#fff',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingVertical: 16,
-        paddingHorizontal: 19,
-        alignItems: 'center',
-        borderBottomWidth: 1,
-        borderColor: 'rgba(0, 0, 0, 0.15)',
-      },
-      memoListItemTitle: {
-        fontSize: 16,
-        lineHeight: 32,
-      },
-      memoListItemDate: {
-        fontSize: 12,
-        lineHeight: 16,
-        color: '#848484',
-      },
-      memoDelete: {
-        padding: 8,
-      },
+  memoListItem: {
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 16,
+    paddingHorizontal: 19,
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: 'rgba(0, 0, 0, 0.15)',
+  },
+  memoListItemTitle: {
+    fontSize: 16,
+    lineHeight: 32,
+  },
+  memoListItemDate: {
+    fontSize: 12,
+    lineHeight: 16,
+    color: '#848484',
+  },
+  memoDelete: {
+    padding: 8,
+  },
 });
