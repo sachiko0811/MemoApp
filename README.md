@@ -1,4 +1,4 @@
-<h1>Simple Memo App </h1>
+<h1>Simple Memo App for ios and Android </h1>
 
 Memo Application with React Native
 
