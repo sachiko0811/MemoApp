@@ -1,5 +1,7 @@
 <h1>Simple Memo App for ios and Android </h1>
 
+[image](https://user-images.githubusercontent.com/58486384/113233419-042e8d80-9254-11eb-91ae-5cbeeaf2c8c0.png)
+
 Memo Application with React Native
 
 **Languages:**
