@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   memoHeader: {
-    backgroundColor: '#467FD3',
+    backgroundColor: '#5897A6',
     height: 96,
     justifyContent: 'center',
     paddingVertical: 24,
