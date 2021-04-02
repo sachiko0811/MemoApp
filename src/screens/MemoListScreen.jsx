@@ -6,9 +6,9 @@ import firebase from 'firebase';
 
 import MemoList from '../components/MemoList';
 import CircleButton from '../components/CircleButton';
-import SignOutButton from '../components/SignOutButton';
 import Button from '../components/Button';
 import Loading from '../components/Loading';
+import HeaderRightButton from '../components/HeaderRightButton';
 
 export default function MemoListScreen(props) {
   const { navigation } = props;
@@ -16,38 +16,49 @@ export default function MemoListScreen(props) {
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => <SignOutButton />,
-    });
-  }, []);
+    setLoading(true);
 
-  useEffect(() => {
-    const db = firebase.firestore();
-    const { currentUser } = firebase.auth();
-    let unsubscribe = () => {};
-    if (currentUser) {
-      setLoading(true);
-      const ref = db.collection(`users/${currentUser.uid}/memos`).orderBy('updatedAt', 'desc');
-        unsubscribe = ref.onSnapshot((snapshot) => {
-        const userMemos = [];
+    const cleanupFuncs = {
+      auth: () => {},
+      memos: () => {},
+    };
+    cleanupFuncs.auth = firebase.auth().onAuthStateChanged((user) => {
+      if(user) {
+        const db = firebase.firestore();
+        const ref = db.collection(`users/${user.uid}/memos`).orderBy('updatedAt', 'desc');
+        cleanupFuncs.memos = ref.onSnapshot((snapshot) =>  {
+          const userMemos = [];
           snapshot.forEach((doc) => {
-            console.log(doc.id, doc.data());
             const data = doc.data();
-            userMemos.push({
+            userMemos.push
+            ({
               id: doc.id,
-                bodyText: data.bodyText,
-                updatedAt: data.updatedAt.toDate(),
-              });
-          });     
-          setMemos(userMemos);   
+              bodyText: data.bodyText,
+              updatedAt: data.updatedAt.toDate(),
+            });
+          });
+          setMemos(userMemos);
           setLoading(false);
-        }, (error) => {
-            console.log(error);
-            setLoading(false);
-            Alert.alert('Failed to load');
+        }, () => {
+          setLoading(false);
         });
+        navigation.setOptions({
+          headerRight: () => (
+            <HeaderRightButton currentUser={user}cleanupFuncs={cleanupFuncs} />
+          ),
+        });
+      } else {
+        firebase.auth().signInAnonymously()
+        .catch(() => {
+          Alert.alert('Error', 'Please restart');
+        })
+        .then(() => { setLoading(false); });
       }
-        return unsubscribe;
+    });
+    return () => {
+      cleanupFuncs.auth();
+      cleanupFuncs.memos();
+    };
     }, []);
 
   if (memos.length === 0) {

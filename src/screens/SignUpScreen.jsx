@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   View, Text, TextInput, StyleSheet, TouchableOpacity, Alert
 } from 'react-native';
 import firebase from 'firebase';
 
 import Button from '../components/Button';
+import Loading from '../components/Loading';
+import CancelLogin from '../components/CancelLogIn';
 import { translateErrors } from '../utils';
+import { is } from 'date-fns/locale';
 
 export default function SignUpScreen(props) {
   const { navigation } = props;
@@ -13,16 +16,27 @@ export default function SignUpScreen(props) {
   const [password, setPassword] = useState('');
   const [isLoading, setLoading] = useState(false);
 
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <CancelLogin />,
+    });
+  }, []);
+
   function handlePress() {
     setLoading(true);
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      const { user } = userCredential;
-      console.log(user.uid);
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'MemoList' }],
-      });
+    const { currentUser } = firebase.auth();
+    if (!currentUser) { return; }
+    const credential = firebase.auth.EmailAuthProvider.credential(email, password);
+    currentUser.linkWithCredential(credential)
+    .then(() => {
+      Alert.alert('Registration Succrssful', [
+        {
+          text: 'OK',
+          onPress: () => {
+            navigation.reset({ index: 0, routes: [{ name: 'MemoList' }] });
+          },
+        },
+      ]);
     })
     .catch((error) => {
       console.log(error.code, error.message);
@@ -35,6 +49,7 @@ export default function SignUpScreen(props) {
   }
   return (
     <View style={styles.container}>
+      <Loading isLoading={isLoading} />
       <View style={styles.inner}>
         <Text style={styles.title}>Sign Up</Text>
           <TextInput
