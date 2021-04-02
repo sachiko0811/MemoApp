@@ -2,7 +2,7 @@
   "expo": {
     "name": "MemoApp",
     "slug": "MemoApp",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "privacy": "unlisted",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,11 +20,11 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "jp.workabroad.memoappsachiko",
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.0.2"
     },
     "android": {
         "package": "jp.workabroad.memoappsachiko",
-        "versionCode": 1,
+        "versionCode": 3,
         "permissions": [],
         "adaptiveIcon": {
           "foregroundImage": "./assets/icon_adaptive_foreground.png",
