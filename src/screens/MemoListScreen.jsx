@@ -9,6 +9,7 @@ import CircleButton from '../components/CircleButton';
 import Button from '../components/Button';
 import Loading from '../components/Loading';
 import HeaderRightButton from '../components/HeaderRightButton';
+// import LogOutButton from '../components/LogOutButton';
 
 export default function MemoListScreen(props) {
   const { navigation } = props;
@@ -86,7 +87,7 @@ export default function MemoListScreen(props) {
             />
       </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

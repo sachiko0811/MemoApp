@@ -25,7 +25,9 @@ export default function LogOutButton(props) {
             .then(() => {
               navigation.reset({
                 index: 0,
-                routes: [{ name: 'MomeList' }],
+                routes: [
+                  { name: 'MomeList' }
+                ],
               });
             })
             .catch(() => {
