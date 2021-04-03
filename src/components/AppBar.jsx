@@ -6,7 +6,7 @@ export default function AppBar() {
     <View style={styles.appbar}>
       <View style={styles.appbarInner}>
         <Text style={styles.appbarTitle}>Memo App</Text>
-        <Text style={styles.appbarRight}>Sign Out</Text>
+        <Text style={styles.appbarRight}>Log Out</Text>
       </View>
     </View>
   );

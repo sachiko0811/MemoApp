@@ -11,7 +11,7 @@ export default function LogOutButton(props) {
   const navigation = useNavigation();
 
   function handlePress() {
-    Alert.alert('Sign Out', 'Are you sure?', [
+    Alert.alert('Log Out', 'Are you sure?', [
       {
         text: 'Cancel',
         onPress: () => {},
@@ -29,7 +29,7 @@ export default function LogOutButton(props) {
               });
             })
             .catch(() => {
-              Alert.alert('Failed to sign out');
+              Alert.alert('Failed to log out');
             });
         },
       },
@@ -38,7 +38,7 @@ export default function LogOutButton(props) {
 
   return (
     <TouchableOpacity onPress={handlePress} style={styles.container}>
-        <Text style={styles.label}>Sign Out</Text>
+        <Text style={styles.label}>Log Out</Text>
     </TouchableOpacity>
   );
 }

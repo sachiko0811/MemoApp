@@ -44,7 +44,7 @@ export default function MemoListScreen(props) {
         });
         navigation.setOptions({
           headerRight: () => (
-            <HeaderRightButton currentUser={user}cleanupFuncs={cleanupFuncs} />
+            <HeaderRightButton currentUser={user} cleanupFuncs={cleanupFuncs} />
           ),
         });
       } else {
@@ -112,4 +112,4 @@ const emptyStyles = StyleSheet.create({
   button: {
     alignSelf: 'center',
   },
-})
+});

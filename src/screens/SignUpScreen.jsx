@@ -8,7 +8,6 @@ import Button from '../components/Button';
 import Loading from '../components/Loading';
 import CancelLogin from '../components/CancelLogIn';
 import { translateErrors } from '../utils';
-import { is } from 'date-fns/locale';
 
 export default function SignUpScreen(props) {
   const { navigation } = props;
@@ -29,7 +28,7 @@ export default function SignUpScreen(props) {
     const credential = firebase.auth.EmailAuthProvider.credential(email, password);
     currentUser.linkWithCredential(credential)
     .then(() => {
-      Alert.alert('Registration Succrssful', [
+      Alert.alert('Registration Succrssful',"Don't forget your email address and password!", [
         {
           text: 'OK',
           onPress: () => {
@@ -64,7 +63,7 @@ export default function SignUpScreen(props) {
           <TextInput 
             style={styles.input} 
             value={password}
-            onChangeText={(pwd) => { setPassword(pwd); }}
+            onChangeText={(text) => { setPassword(text); }}
             autoCapitalize="none"
             placeholder="Password"
             secureTextEntry

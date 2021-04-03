@@ -61,11 +61,11 @@ export default function MemoList(props) {
     );
   }
   return(
-      <View>
+      <View style={styles.container}>
         <FlatList
           data={memos}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id }
+          keyExtractor={(item) => item.id}
         />
       </View>
   );
@@ -80,6 +80,9 @@ MemoList.propTypes = {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   memoListItem: {
     backgroundColor: '#fff',
     flexDirection: 'row',
