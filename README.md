@@ -1,8 +1,9 @@
-<h1>Simple Memo App for ios and Android </h1>
+<h1>Memo App for ios and Android </h1>
 
-![image](https://user-images.githubusercontent.com/58486384/113233527-4952bf80-9254-11eb-80a7-7aa81da29620.png)
+![image](https://user-images.githubusercontent.com/58486384/114120782-07ec9080-98a2-11eb-8705-3dad0ddb921b.png)
 
-Memo Application with React Native
+
+Simple Memo Application with React Native
 
 **Languages:**
 
@@ -14,6 +15,6 @@ React(Hooks), React Native, Expo, Firebase
 <br>
 
 
-You can try this application on App store!
+You can try this application on App store!📱
 
 https://apps.apple.com/ca/app/memoapp/id1561240004
