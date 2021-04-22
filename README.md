@@ -1,4 +1,4 @@
-<h1>Memo App for ios and Android </h1>
+<h1>Memo App for ios </h1>
 
 ![image](https://user-images.githubusercontent.com/58486384/114120782-07ec9080-98a2-11eb-8705-3dad0ddb921b.png)
 
