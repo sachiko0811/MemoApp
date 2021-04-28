@@ -15,6 +15,6 @@ React(Hooks), React Native, Expo, Firebase
 <br>
 
 
-You can try this application on App store!📱
+You can try this application on App store!📱✨
 
 https://apps.apple.com/ca/app/memoapp/id1561240004
